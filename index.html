@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Новорічний Радар 2027</title>
+  <style>
+    body {
+      background: #0b132b;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 60px;
+      overflow: hidden;
+      margin: 0;
+    }
+    .radar-box {
+      background: rgba(28, 37, 65, 0.9);
+      border: 2px solid #5bc0be;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 520px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 0 25px rgba(91, 192, 190, 0.3);
+    }
+    .timer {
+      font-size: 32px;
+      font-weight: bold;
+      color: #ffbe0b;
+      margin: 20px 0;
+    }
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      user-select: none;
+      z-index: 1;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(105vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="radar-box">
+    <h1>🎄 Новорічний Радар 2027</h1>
+    <p>Маршрут: Північний полюс (XMS) ➔ Чернівці</p>
+    <p>До Нового 2027 року залишилося:</p>
+    <div class="timer" id="countdown">Завантаження...</div>
+    <p>Швидкість саней: <b>6 200 км/год</b> | Висота: <b>18 000 м</b></p>
+  </div>
+
+  <script>
+    const targetDate = new Date("January 1, 2027 00:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerText = "🎉 З Новим 2027 Роком!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / 1000 / 60) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("countdown").innerText =
+        `${days} дн. ${hours} год. ${mins} хв. ${secs} сек.`;
+    }, 1000);
+
+    setInterval(() => {
+      const snow = document.createElement("div");
+      snow.classList.add("snowflake");
+      snow.innerText = "❄";
+      snow.style.left = Math.random() * 100 + "vw";
+      snow.style.fontSize = Math.random() * 15 + 10 + "px";
+      snow.style.opacity = Math.random();
+      snow.style.animationDuration = Math.random() * 3 + 3 + "s";
+      document.body.appendChild(snow);
+      setTimeout(() => snow.remove(), 6000);
+    }, 200);
+  </script>
+</body>
+</html>
